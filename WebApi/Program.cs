@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using WebApi.Data;
 using WebApi.Repository;
 using WebApi.Repository.IRepository;
 
@@ -12,7 +14,11 @@ builder.Services.AddSwaggerGen();
 
 //service
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddDbContext<ApplicationDBContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
